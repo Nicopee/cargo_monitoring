@@ -40,6 +40,16 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api-sender' => [
+            'driver' => 'passport',
+            'provider' => 'senders',
+            'hash' => false,
+        ],
+        'api-agent' => [
+            'driver' => 'passport',
+            'provider' => 'agents',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -64,11 +74,14 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'senders' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Sender::class,
+        ],
+        'agents' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Agent::class,
+        ],
     ],
 
     /*

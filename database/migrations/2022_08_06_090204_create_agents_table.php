@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('username');
             $table->string('branch');
             $table->string('location');
-            $table->string('email');
             $table->string('contact');
+            $table->string('email')->unique();
+            $table->string('password');
             $table->timestamps();
         });
     }

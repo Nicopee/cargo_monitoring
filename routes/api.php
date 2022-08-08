@@ -6,6 +6,7 @@ use App\Http\Controllers\SenderController;
 use App\Http\Controllers\AgentsController;
 use App\Http\Controllers\PackagesController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Auth\AuthController;
 
 
 /*
@@ -32,4 +33,6 @@ Route::middleware('throttle:6')->group(function () {
     Route::apiResources([
         'categories' => CategoryController::class,
     ]);
+    Route::post('sender/login', [AuthController::class, 'loginSender']);
+    Route::post('agent/login', [AuthController::class, 'loginAgent']);
 });
