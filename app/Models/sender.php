@@ -12,6 +12,8 @@ class Sender extends Authenticatable
 {
     use HasFactory, HasApiTokens;
 
+    protected $table = 'senders';
+
 
     /**
      * Encrypt the sender password before saving
