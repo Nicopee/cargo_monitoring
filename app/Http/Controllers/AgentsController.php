@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Agent;
 
 
 class AgentsController extends Controller
@@ -13,8 +14,10 @@ class AgentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $perPage = $request->has('per_page') ? $request->per_page : 10;
+        return response()->json(Agent::paginate($perPage), 200);
     }
 
     /**
@@ -26,14 +29,24 @@ class AgentsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:categories',
-            'description' => 'required',
-            'image' => 'required',
-            'status' => 'required',
-            'created_by' => 'required',
+            'username' => 'required',
+            'branch' => 'required',
+            'location' => 'required',
+            'contact' => 'required',
+            'email' => 'required',
+            'password' => 'required',
         ]);
 
         if (!$validator->fails()) {
+            $agent = new Agent();
+            $agent->username = $request->username;
+            $agent->branch = $request->branch;
+            $agent->location = $request->location;
+            $agent->contact = $request->contact;
+            $agent->email = $request->email;
+            $agent->password = $request->password;
+            $agent->save();
+            return response()->json(['message' => 'Agent Registered'], 200);
         } else {
             return $validator->errors();
         }

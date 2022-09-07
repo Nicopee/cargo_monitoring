@@ -14,9 +14,11 @@ class SenderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        // returns a list of all senders
+        $perPage = $request->has('per_page') ? $request->per_page : 10;
+        return response()->json(Sender::paginate($perPage), 200);
     }
 
 
@@ -37,11 +39,13 @@ class SenderController extends Controller
         ]);
 
         if (!$validator->fails()) {
-            $validated_data = $request->all();
-            $category = new Sender();
-            $category->firstname = $validated_data['firstname'];
-            $category->lastname = $validated_data['lastname'];
-            $category->save();
+            $sender = new Sender();
+            $sender->firstname = $request->firstname;
+            $sender->lastname = $request->lastname;
+            $sender->contact = $request->contact;
+            $sender->email = $request->email;
+            $sender->password = $request->password;
+            $sender->save();
             return response()->json(['message' => 'Sender Registered'], 200);
         } else {
             return $validator->errors();

@@ -28,7 +28,7 @@ class PackageRequest extends FormRequest
             'qantity' => 'required',
             'amount' => 'required',
             'payment_status' => 'required',
-            'category' => 'contact'
+            'category' => 'required'
         ];
     }
 }

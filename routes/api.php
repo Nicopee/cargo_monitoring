@@ -28,11 +28,15 @@ Route::middleware('throttle:6')->group(function () {
         'agent' => AgentsController::class,
     ]);
     Route::apiResources([
-        'packages' => PackagesController::class,
-    ]);
-    Route::apiResources([
         'categories' => CategoryController::class,
     ]);
     Route::post('sender/login', [AuthController::class, 'loginSender']);
     Route::post('agent/login', [AuthController::class, 'loginAgent']);
+});
+
+// sender routes
+Route::middleware('auth:api-sender')->group(function () {
+    Route::apiResources([
+        'packages' => PackagesController::class,
+    ]);
 });

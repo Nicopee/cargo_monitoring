@@ -41,8 +41,8 @@ class AuthController extends Controller
                 'grant_type' => 'password',
                 'client_id' => env($userType . "_USER_ID"),
                 'client_secret' => env($userType . "_USER_SECRET"),
-                'username' => $loginCreds['username'],
-                'password' => $loginCreds['password'],
+                'username' => $request->username,
+                'password' => $request->password,
             ];
 
             try {
@@ -53,7 +53,8 @@ class AuthController extends Controller
                 $login_response = json_decode((string) $response->getBody());
                 return response()->json($login_response);
             } catch (GuzzleException $ex) {
-                return response()->json(['message' => $ex->getMessage()], 401);
+                return response()->json($ex->getMessage(), 401);
+                // return response()->json(['message' => 'Incorrect email/password.'], 401);
             } catch (Exception $ex) {
                 return response()->json(['message' => "Server Error"], 500);
             }
